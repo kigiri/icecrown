@@ -256,11 +256,11 @@ const timings = []
 const M = 60*1000
 const H = 60*M
 const now = Date.now()
-const start = Math.floor(Date.now()/(24*H))*(24*H) - 1*H
+const start =Math.floor(now / (24*H)) * (24*H) - 1*H + 3*M + 30*S
 for (const line of rawTimings.split('\n')) {
   if (/>(\d\d)h(\d\d)</.test(line)) {
     const [, h, m] = line.match(/>(\d\d)h(\d\d)</).map(Number)
-    timings.push({ boss, time: start + (h*60+m)*M, h, m })
+    timings.push({ boss, time: start + (h*60+m)*M })
   } else if (/i>([^<]+)</.test(line)) {
     const name = line.match(/i>([^<]+)</)[1].trim()
     boss = bosses.find(b => b.firstChild.textContent === name)
