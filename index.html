@@ -71,9 +71,11 @@ body:after {
   display: block;
   width: 100vw;
   height: 66vw;
-  --background: grey;
   background-image: url(icecrown.webp), url(icecrown.jpg);
   position: relative;
+  background-position: center;
+  background-size: 100%;
+  background-repeat: no-repeat;
 }
 
 .boss b, .boss time {
@@ -272,7 +274,7 @@ const update = () => {
   const index = timings.findIndex(t => t.time < Date.now())
   const next = timings[index]
   const current = timings[index-1]
-  const old = timings[index-2]
+  const old = timings[index+2]
   old && (old.boss.className = 'boss') // remove all classes
   setTime(current) && (current.boss.classList.add('current'))
   setTime(next) && (next.boss.classList.add('next'))
