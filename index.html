@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Icecrown Realtime Bosses</title>
+<meta charset="utf-8">
+<link id="fav" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB0AAAAdCAMAAABhTZc9AAAAPFBMVEUAAAAAAQDv7e6xtLIAAAAAAAD9/fwAAAAZGRkAAADa8O5VVVWlmpnPBwbhrquVLCXSzcrUX1qIeXZISUiUNCNLAAAACnRSTlMB////tSL/jPxEb8QCRAAAARBJREFUeAFt0QeOxSAMBNBvk2oc0+5/1x1WJk0ZVfQ0pv2uzPu67vPvMyt51m/bWoxtA39Y1LwguRJNb4xhGQmvNnCQ8/6oetMTMfy7OvZez2pH5tfweVTDS5Ho5d2rd83h0iYSkEFiZnoem8BaSjFXK0Xa7VSkeiBux1FECTy0ha7FLFlJXbmBz+sKGinVqilBTZgjUce530jAgJAztIiw+qFdxWqSmrJmwwLozzGBcQlBUtKccXrT86XBLVLU/oAtL1m1tQ3omTciYg7+A8wNTX9mf03mutTaas7K7Le5KwYvGW0o5t5DBEX4P4ruPRM0oPutKylXRHs40v7QnShuHvJHfIy+BYNfma9ht6v+AbHID/hC8daLAAAAAElFTkSuQmCC" rel="icon" type="image/png" />
+<style>
+html {
+  background: #16190c;
+}
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+body {
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+  justify-items: center;
+}
+
+body:after {
+  position: fixed;
+  top: 0;
+  display: block;
+  content: ' ';
+  width: 100vw;
+  height: 100vh;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: #16190c;
+  filter: blur(calc(min(0.5vw, 1vh)));
+  background-image: url(data:image/jpg;base64,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);
+  z-index: -1;
+}
+
+.boss {
+  position: absolute;
+  background-size: 1.5vw;
+  background-repeat: no-repeat;
+  display: none;
+  padding-left: 1.5vw;
+  font-size: 1.5vw;
+  font-family: sans-serif;
+  cursor: default;
+  user-select: none;
+  flex-direction: column-reverse;
+}
+
+.current, .next { display: flex }
+.next { z-index: 10 }
+
+.boss:hover {
+  z-index: 100;
+  opacity: 1;
+}
+
+.next {
+  filter: grayscale(1);
+  opacity: 0.7;
+}
+
+#map {
+  display: block;
+  width: 100vw;
+  height: 66vw;
+  --background: grey;
+  background-image: url(icecrown.webp), url(icecrown.jpg);
+  position: relative;
+}
+
+.boss b, .boss time {
+  color: white;
+  text-shadow:
+   -2px -2px 0 #000,  
+    2px -2px 0 #000,
+    -2px 2px 0 #000,
+     2px 2px 0 #000,
+     0px 0px 10px #000;
+}
+
+.boss time:before { content: ' ' }
+.boss:hover i, .boss:hover b { display: inherit }
+.boss b { display: none }
+.boss i {
+  font-family: monospace;
+  font-size: 1vw;
+  display: none;
+  position: relative;
+  background-color: black;
+  color: white;
+  padding: 5px;
+  top: 5px;
+  border-radius: 4px;
+}
+
+@media (orientation: landscape) and (max-height: 66vw) {
+  .boss {
+    background-size: 2.25vh;
+    padding-left: 2.25vh;
+    font-size: 2.25vh;
+  }
+  .boss i {
+    font-size: 1.5vh;
+  }
+
+  #map {
+    width: 150vh;
+    height: 100vh;
+  }
+}
+
+</style>
+</head>
+<body>
+  <div id="map">
+    <div class="boss" data-desc="Aux portes de la Citadelle de la Couronne de glace" style="left : 50.22%; top : 88.00%;"><b>Falric</b><i>50.22, 88.00</i><time></div>
+    <div class="boss" data-desc="Au Fléaulme" style="left : 79.86%; top : 60.93%;"><b>Prophète Tharon'ja</b><i>79.86, 60.93</i><time></div>
+    <div class="boss" data-desc="Au Fléaulme" style="left : 77.89%; top : 65.92%;"><b>Novos l'Invocateur</b><i>77.89, 65.92</i><time></div>
+    <div class="boss" data-desc="A la Vallée de l'Espoir perdu" style="left : 58.53%; top : 39.46%;"><b>Trollétripe</b><i>58.53, 39.46</i><time></div>
+    <div class="boss" data-desc="A Mord'rethar : la Porte de la Mort" style="left : 67.48%; top : 58.09%;"><b>Krik'thir le Gardien de la porte</b><i>67.48, 58.09</i><time></div>
+    <div class="boss" data-desc="A la Charognerie" style="left : 29.57%; top : 62.26%;"><b>Prince Taldaram</b><i>29.57, 62.26</i><time></div>
+    <div class="boss" data-desc="Dans une grotte au Sanctum de Réanimation" style="left : 36.57%; top : 67.63%;"><b>Le Recousu</b><i>36.57, 67.63</i><time></div>
+    <div class="boss" data-desc="A Alur'thar : la Porte de la Désolation" style="left : 49.58%; top : 32.24%;"><b>Reine de sang Lana'thel</b><i>49.58, 32.24</i><time></div>
+    <div class="boss" data-desc="A Alur'thar : la Porte de la Désolation" style="left : 57.30%; top : 30.36%;"><b>Professeur Putricide</b><i>57.30, 30.36</i><time></div>
+    <div class="boss" data-desc="A Ymirheim" style="left : 57.65%; top : 55.97%;"><b>Skadi le Brutal</b><i>57.67, 55.97</i><time></div>
+    <div class="boss" data-desc="A Ymirheim" style="left : 52.32%; top : 52.53%;"><b>Ingvar le Pilleur</b><i>52.32, 52.53</i><time></div>
+    <div class="boss" data-desc="Au Glacier de la Couronne de glace" style="left : 44.35%; top : 49.13%;"><b>Ancien Nadox</b><i>44.35, 19.13</i><time></div>
+    <div class="boss" data-desc="A Alur'thar : la Porte de la Désolation" style="left : 53.93%; top : 44.62%;"><b>Prince Keleseth</b><i>53.93, 44.62</i><time></div>
+    <div class="boss" data-desc="Au Guet du Nécrorateur" style="left : 64.80%; top : 22.09%;"><b>Le Chevalier noir</b><i>64.80, 22.09</i><time></div>
+    <div class="boss" data-desc="A la Chute de Sindragosa" style="left : 70.54%; top : 38.56%;"><b>Bronjahm</b><i>70.54, 38.56</i><time></div>
+    <div class="boss" data-desc="A Corp'rethar : la Porte de l'Horreur" style="left : 46.88%; top : 65.39%;"><b>Seigneur du Fléau Tyrannus</b><i>46.88, 65.39</i><time></div>
+    <div class="boss" data-desc="A Malykriss : le Fort infâme" style="left : 59.09%; top : 72.33%;"><b>Maître-forge Gargivre</b><i>59.09, 72.33</i><time></div>
+    <div class="boss" data-desc="A la Citadelle de la Couronne de glace" style="left : 58.18%; top : 83.52%;"><b>Marwyn</b><i>58.18, 83.52</i><time></div>
+    <div class="boss" data-desc="A la Citadelle de la Couronne de glace" style="left : 51.16%; top : 74.48%;"><b>Dame Murmemort</b><i>51.16, 74.48</i><time></div>
+    <div class="boss" data-desc="Au sud de la Charognerie" style="left : 31.6%; top : 70.5%;"><b>Noth le Porte-peste</b><i>31.6, 70.5</i><time></div>
+  </div>
+</body>
+<script>
+const bossIcon = document.getElementById('fav').href
+const bosses = [...document.getElementsByClassName('boss')]
+bosses.forEach(b => b.style.backgroundImage = `url(${bossIcon})`)
+
+const rawTimings = `
+<th colspan="4" style="text-align : center;">Heures d'apparition des boss de la Couronne de glace</th>
+<td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Reine de sang Lana'thel</i></td>
+<td style="text-align : center;">03h20</td>
+<td style="text-align : center;">10h00</td>
+<td style="text-align : center;">16h40</td>
+<td style="text-align : center;">23h20</td>
+<td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Professeur Putricide</i></td>
+<td style="text-align : center;">03h40</td>
+<td style="text-align : center;">10h20</td>
+<td style="text-align : center;">17h00</td>
+<td style="text-align : center;">23h40</td>
+<td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Dame Murmemort</i></td>
+<td style="text-align : center;">04h00</td>
+<td style="text-align : center;">10h40</td>
+<td style="text-align : center;">17h20</td>
+<td style="text-align : center;">-</td>
+<td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Skadi le Brutal</i> <a class="tooltip_inline monture_lien violet"href="https://www.mamytwink.com/montures/renes-de-proto-drake-bleu" data-type="monture" data-couleur="violet" data-type-monture="Volante" data-source-monture="Butin" data-difficulte-monture="Difficile"><img src="https://www.mamytwink.com/articles/montures/proto-bleu-icone.jpg" alt="Icone monture Rênes de proto-drake bleu"/><span class="nom">Rênes de proto-drake bleu</span></a> </td>
+<td style="text-align : center;">04h20</td>
+<td style="text-align : center;">11h00</td>
+<td style="text-align : center;">17h40</td>
+<td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Ingvar le Pilleur</i></td>
+<td style="text-align : center;">04h40</td>
+<td style="text-align : center;">11h20</td>
+<td style="text-align : center;">18h00</td>
+<td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Prince Keleseth</i></td>
+<td style="text-align : center;">05h00</td>
+<td style="text-align : center;">11h40</td>
+<td style="text-align : center;">18h20</td>
+<td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Le Chevalier noir</i></td>
+<td style="text-align : center;">05h20</td>
+<td style="text-align : center;">12h00</td>
+<td style="text-align : center;">18h40</td>
+<td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Bronjahm </i>(sac 34 emplacements)</td>
+<td style="text-align : center;">05h40</td>
+<td style="text-align : center;">12h20</td>
+<td style="text-align : center;">19h00</td>
+<td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Seigneur du Fléau Tyrannus</i></td>
+<td style="text-align : center;">06h00</td>
+<td style="text-align : center;">12h40</td>
+<td style="text-align : center;">19h20</td>
+<td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Maître-forge Gargivre</i></td>
+<td style="text-align : center;">06h20</td>
+<td style="text-align : center;">13h00</td>
+<td style="text-align : center;">19h40</td>
+<td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Marwyn</i></td>
+<td style="text-align : center;">06h40</td>
+<td style="text-align : center;">13h20</td>
+<td style="text-align : center;">20h00</td>
+<td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Falric</i></td>
+<td style="text-align : center;">07h00</td>
+<td style="text-align : center;">13h40</td>
+<td style="text-align : center;">20h20</td>
+<td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Prophète Tharon'ja</i></td>
+<td style="text-align : center;">07h20</td>
+<td style="text-align : center;">14h00</td>
+<td style="text-align : center;">20h40</td>
+<td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Novos l'Invocateur</i></td>
+<td style="text-align : center;">07h40</td>
+<td style="text-align : center;">14h20</td>
+<td style="text-align : center;">21h00</td>
+<td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Trollétripe</i></td>
+<td style="text-align : center;">08h00</td>
+<td style="text-align : center;">14h40</td>
+<td style="text-align : center;">21h20</td>
+<td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Krik'thir le Gardien de la porte</i></td>
+<td style="text-align : center;">08h20</td>
+<td style="text-align : center;">15h00</td>
+<td style="text-align : center;">21h40</td>
+<td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Prince Taldaram</i></td>
+<td style="text-align : center;">08h40</td>
+<td style="text-align : center;">15h20</td>
+<td style="text-align : center;">22h00</td>
+<td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Ancien Nadox</i></td>
+<td style="text-align : center;">09h00</td>
+<td style="text-align : center;">15h40</td>
+<td style="text-align : center;">22h20</td>
+<td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Noth le Porte-peste</i></td>
+<td style="text-align : center;">09h20</td>
+<td style="text-align : center;">16h00</td>
+<td style="text-align : center;">22h40</td>
+<td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Le Recousu</i></td>
+<td style="text-align : center;">09h40</td>
+<td style="text-align : center;">16h20</td>
+<td style="text-align : center;">23h00</td>
+`
+
+
+const rtf = new Intl.RelativeTimeFormat('fr', {
+  localeMatcher: "best fit",
+  numeric: "always",
+  style: "long",
+})
+
+const relatime = elapsed => {
+  const diff = elapsed - Date.now()
+  return Math.abs(diff) < M
+    ? rtf.format(Math.round(diff/1000), 'second')
+    : rtf.format(Math.round(diff/M), 'minute')
+}
+
+const timings = []
+const M = 60*1000
+const H = 60*M
+const now = Date.now()
+const start = Math.floor(Date.now()/(24*H))*(24*H) - 1*H
+for (const line of rawTimings.split('\n')) {
+  if (/>(\d\d)h(\d\d)</.test(line)) {
+    const [, h, m] = line.match(/>(\d\d)h(\d\d)</).map(Number)
+    timings.push({ boss, time: start + (h*60+m)*M, h, m })
+  } else if (/i>([^<]+)</.test(line)) {
+    const name = line.match(/i>([^<]+)</)[1].trim()
+    boss = bosses.find(b => b.firstChild.textContent === name)
+    console.log({ name, boss })
+  }
+}
+
+timings.sort((a, b) => b.time - a.time)
+const setTime = t => t && (t.boss.lastChild.textContent = relatime(t.time))
+const update = () => {
+  console.log('update')
+  const index = timings.findIndex(t => t.time < Date.now())
+  const next = timings[index]
+  const current = timings[index-1]
+  const old = timings[index-2]
+  old && (old.boss.className = 'boss') // remove all classes
+  setTime(current) && (current.boss.classList.add('current'))
+  setTime(next) && (next.boss.classList.add('next'))
+
+  console.log({
+    current: setTime(current),
+    next: setTime(next),
+  })
+}
+
+setInterval(update, 1000)
+update()
+
+// timings.map(t => console.log(relatime(t.time), now - t.time, t.boss.firstChild.textContent))
+
+</script>
+</html>
