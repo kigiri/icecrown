@@ -170,90 +170,206 @@ const bosses = [...document.getElementsByClassName('boss')]
 bosses.forEach(b => b.style.backgroundImage = `url(${bossIcon})`)
 
 const rawTimings = `
-<th colspan="4" style="text-align : center;">Heures d'apparition des boss de la Couronne de glace</th>
-<td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Reine de sang Lana'thel</i></td>
-<td style="text-align : center;">03h20</td>
-<td style="text-align : center;">10h00</td>
-<td style="text-align : center;">16h40</td>
-<td style="text-align : center;">23h20</td>
-<td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Professeur Putricide</i></td>
-<td style="text-align : center;">03h40</td>
-<td style="text-align : center;">10h20</td>
-<td style="text-align : center;">17h00</td>
-<td style="text-align : center;">23h40</td>
-<td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Dame Murmemort</i></td>
-<td style="text-align : center;">04h00</td>
-<td style="text-align : center;">10h40</td>
-<td style="text-align : center;">17h20</td>
-<td style="text-align : center;">-</td>
-<td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Skadi le Brutal</i> <a class="tooltip_inline monture_lien violet"href="https://www.mamytwink.com/montures/renes-de-proto-drake-bleu" data-type="monture" data-couleur="violet" data-type-monture="Volante" data-source-monture="Butin" data-difficulte-monture="Difficile"><img src="https://www.mamytwink.com/articles/montures/proto-bleu-icone.jpg" alt="Icone monture Rênes de proto-drake bleu"/><span class="nom">Rênes de proto-drake bleu</span></a> </td>
-<td style="text-align : center;">04h20</td>
-<td style="text-align : center;">11h00</td>
-<td style="text-align : center;">17h40</td>
-<td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Ingvar le Pilleur</i></td>
-<td style="text-align : center;">04h40</td>
-<td style="text-align : center;">11h20</td>
-<td style="text-align : center;">18h00</td>
-<td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Prince Keleseth</i></td>
-<td style="text-align : center;">05h00</td>
-<td style="text-align : center;">11h40</td>
-<td style="text-align : center;">18h20</td>
-<td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Le Chevalier noir</i></td>
-<td style="text-align : center;">05h20</td>
-<td style="text-align : center;">12h00</td>
-<td style="text-align : center;">18h40</td>
-<td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Bronjahm </i>(sac 34 emplacements)</td>
-<td style="text-align : center;">05h40</td>
-<td style="text-align : center;">12h20</td>
-<td style="text-align : center;">19h00</td>
-<td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Seigneur du Fléau Tyrannus</i></td>
-<td style="text-align : center;">06h00</td>
-<td style="text-align : center;">12h40</td>
-<td style="text-align : center;">19h20</td>
-<td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Maître-forge Gargivre</i></td>
-<td style="text-align : center;">06h20</td>
-<td style="text-align : center;">13h00</td>
-<td style="text-align : center;">19h40</td>
-<td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Marwyn</i></td>
-<td style="text-align : center;">06h40</td>
-<td style="text-align : center;">13h20</td>
-<td style="text-align : center;">20h00</td>
-<td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Falric</i></td>
-<td style="text-align : center;">07h00</td>
-<td style="text-align : center;">13h40</td>
-<td style="text-align : center;">20h20</td>
-<td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Prophète Tharon'ja</i></td>
-<td style="text-align : center;">07h20</td>
-<td style="text-align : center;">14h00</td>
-<td style="text-align : center;">20h40</td>
-<td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Novos l'Invocateur</i></td>
-<td style="text-align : center;">07h40</td>
-<td style="text-align : center;">14h20</td>
-<td style="text-align : center;">21h00</td>
-<td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Trollétripe</i></td>
-<td style="text-align : center;">08h00</td>
-<td style="text-align : center;">14h40</td>
-<td style="text-align : center;">21h20</td>
-<td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Krik'thir le Gardien de la porte</i></td>
-<td style="text-align : center;">08h20</td>
-<td style="text-align : center;">15h00</td>
-<td style="text-align : center;">21h40</td>
-<td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Prince Taldaram</i></td>
-<td style="text-align : center;">08h40</td>
-<td style="text-align : center;">15h20</td>
-<td style="text-align : center;">22h00</td>
-<td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Ancien Nadox</i></td>
-<td style="text-align : center;">09h00</td>
-<td style="text-align : center;">15h40</td>
-<td style="text-align : center;">22h20</td>
-<td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Noth le Porte-peste</i></td>
-<td style="text-align : center;">09h20</td>
-<td style="text-align : center;">16h00</td>
-<td style="text-align : center;">22h40</td>
-<td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Le Recousu</i></td>
-<td style="text-align : center;">09h40</td>
-<td style="text-align : center;">16h20</td>
-<td style="text-align : center;">23h00</td>
+	<tr>
+			<td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Reine de sang Lana'thel</i></td>
+		</tr>
+		<tr>
+			<td style="text-align : center;">06h00</td>
+			<td style="text-align : center;">12h40</td>
+			<td style="text-align : center;">19h20</td>
+			<td style="text-align : center;">-</td>
+
+		</tr>
+		<tr>
+			<td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Professeur Putricide</i></td>
+		</tr>
+		<tr>
+			<td style="text-align : center;">06h20</td>
+			<td style="text-align : center;">13h00</td>
+			<td style="text-align : center;">19h40</td>
+			<td style="text-align : center;">-</td>
+		</tr>
+		<tr>
+			<td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Dame Murmemort</i></td>
+		</tr>
+		<tr>
+			<td style="text-align : center;">00h00</td>
+			<td style="text-align : center;">06h40</td>
+			<td style="text-align : center;">13h20</td>
+			<td style="text-align : center;">20h00</td>
+
+		</tr>
+		<tr>
+			<td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Skadi le Brutal</i> <a class="tooltip_inline monture_lien violet"href="https://www.mamytwink.com/montures/renes-de-proto-drake-bleu" data-type="monture" data-couleur="violet" data-type-monture="Volante" data-source-monture="Butin" data-difficulte-monture="Difficile"><img src="https://www.mamytwink.com/articles/montures/proto-bleu-icone.jpg" alt="Icone monture Rênes de proto-drake bleu"/><span class="nom">Rênes de proto-drake bleu</span></a> </td>
+		</tr>
+		<tr>
+			<td style="text-align : center;">00h20</td>
+			<td style="text-align : center;">07h00</td>
+			<td style="text-align : center;">13h40</td>
+			<td style="text-align : center;">20h20</td>
+
+		</tr>
+		<tr>
+			<td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Ingvar le Pilleur</i></td>
+		</tr>
+		<tr>
+			<td style="text-align : center;">00h40</td>
+			<td style="text-align : center;">07h20</td>
+			<td style="text-align : center;">14h00</td>
+			<td style="text-align : center;">20h40</td>
+
+		</tr>
+		<tr>
+			<td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Prince Keleseth</i></td>
+		</tr>
+		<tr>
+			<td style="text-align : center;">01h00</td>
+			<td style="text-align : center;">07h40</td>
+			<td style="text-align : center;">14h20</td>
+			<td style="text-align : center;">21h00</td>
+
+		</tr>
+		<tr>
+			<td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Chevalier noir</i></td>
+		</tr>
+		<tr>
+			<td style="text-align : center;">01h20</td>
+			<td style="text-align : center;">08h00</td>
+			<td style="text-align : center;">14h40</td>
+			<td style="text-align : center;">21h20</td>
+
+		</tr>
+		<tr>
+			<td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Bronjahm </i>(sac 34 emplacements)</td>
+		</tr>
+		<tr>
+			<td style="text-align : center;">01h40</td>
+			<td style="text-align : center;">08h20</td>
+			<td style="text-align : center;">15h00</td>
+			<td style="text-align : center;">21h40</td>
+
+		</tr>
+		<tr>
+			<td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Seigneur du Fléau Tyrannus</i></td>
+		</tr>
+		<tr>
+			<td style="text-align : center;">02h00</td>
+			<td style="text-align : center;">08h40</td>
+			<td style="text-align : center;">15h20</td>
+			<td style="text-align : center;">22h00</td>
+
+		</tr>
+		<tr>
+			<td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Maître-forge Gargivre</i></td>
+		</tr>
+		<tr>
+			<td style="text-align : center;">02h20</td>
+			<td style="text-align : center;">09h00</td>
+			<td style="text-align : center;">15h40</td>
+			<td style="text-align : center;">22h20</td>
+
+		</tr>
+		<tr>
+			<td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Marwyn</i></td>
+		</tr>
+		<tr>
+			<td style="text-align : center;">02h40</td>
+			<td style="text-align : center;">09h20</td>
+			<td style="text-align : center;">16h00</td>
+			<td style="text-align : center;">22h40</td>
+
+		</tr>
+		<tr>
+			<td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Falric</i></td>
+		</tr>
+		<tr>
+			<td style="text-align : center;">03h00</td>
+			<td style="text-align : center;">09h40</td>
+			<td style="text-align : center;">16h20</td>
+			<td style="text-align : center;">23h00</td>
+
+		</tr>
+		<tr>
+			<td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Prophète Tharon'ja</i></td>
+		</tr>
+		<tr>
+			<td style="text-align : center;">03h20</td>
+			<td style="text-align : center;">10h00</td>
+			<td style="text-align : center;">16h40</td>
+			<td style="text-align : center;">23h20</td>
+
+		</tr>
+		<tr>
+			<td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Novos l'Invocateur</i></td>
+		</tr>
+		<tr>
+			<td style="text-align : center;">03h40</td>
+			<td style="text-align : center;">10h20</td>
+			<td style="text-align : center;">17h00</td>
+			<td style="text-align : center;">23h40</td>
+
+		</tr>
+		<tr>
+			<td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Trollétripe</i></td>
+		</tr>
+		<tr>
+			<td style="text-align : center;">04h00</td>
+			<td style="text-align : center;">10h40</td>
+			<td style="text-align : center;">17h20</td>
+			<td style="text-align : center;">00h00*</td>
+
+		</tr>
+		<tr>
+			<td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Krik'thir le Gardien de la porte</i></td>
+		</tr>
+		<tr>
+			<td style="text-align : center;">04h20</td>
+			<td style="text-align : center;">11h00</td>
+			<td style="text-align : center;">17h40</td>
+			<td style="text-align : center;">00h20*</td>
+
+		</tr>
+		<tr>
+			<td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Prince Taldaram</i></td>
+		</tr>
+		<tr>
+			<td style="text-align : center;">04h40</td>
+			<td style="text-align : center;">11h20</td>
+			<td style="text-align : center;">18h00</td>
+			<td style="text-align : center;">00h40*</td>
+
+		</tr>
+		<tr>
+			<td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Ancien Nadox</i></td>
+		</tr>
+		<tr>
+			<td style="text-align : center;">05h00</td>
+			<td style="text-align : center;">11h40</td>
+			<td style="text-align : center;">18h20</td>
+			<td style="text-align : center;">01h00*</td>
+
+		</tr>
+		<tr>
+			<td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Noth le Porte-peste</i></td>
+		</tr>
+		<tr>
+			<td style="text-align : center;">05h20</td>
+			<td style="text-align : center;">12h00</td>
+			<td style="text-align : center;">18h40</td>
+			<td style="text-align : center;">01h20*</td>
+
+		</tr>
+		<tr>
+			<td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Le Recousu</i></td>
+		</tr>
+		<tr>
+			<td style="text-align : center;">05h40</td>
+			<td style="text-align : center;">12h20</td>
+			<td style="text-align : center;">19h00</td>
+			<td style="text-align : center;">01h40*</td>
+
+		</tr>
+
 `
 
 const rtf = new Intl.RelativeTimeFormat(navigator.language, {
