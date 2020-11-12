@@ -130,12 +130,10 @@ a, .boss { font-family: sans-serif }
   color: white;
   padding: 5px;
   background: #0007;
-  border-radius: 0 5px 0 0;
+  border-radius: 5px;
 }
 
 </style>
-<script>const whTooltips = {colorLinks: true, iconizeLinks: true, renameLinks: true}</script>
-<script src="https://wow.zamimg.com/widgets/power.js"></script>
 </head>
 <body>
   <div id="map">
@@ -162,6 +160,7 @@ a, .boss { font-family: sans-serif }
   </div>
 </body>
 <script>
+const whTooltips = {colorLinks: true, iconizeLinks: true, renameLinks: true}
 const loots = [["https://fr.wowhead.com/npc=174054",[[183664,"Brassards de molaires émoussées",4],[183665,"Espauliers entachés de Valensort",4],[183667,"Découpeur de geist",4]]],["https://fr.wowhead.com/npc=174053",[[183684,"Protectorat de Tharon’ja",4],[183685,"Sceau fantasmagorique du prophète",4],[183686,"Braies du serpent squelettique",4]]],["https://fr.wowhead.com/npc=174052",[[183627,"Martelet d’invocateur en granit",4],[183671,"Bandelettes nécromantiques",4],[183672,"Thorax de la non-mort",4]]],["https://fr.wowhead.com/npc=174051",[[183626,"Éventreur de Troll",4],[183640,"Jambières des charmes interlopes",4],[183669,"Capuche du Troll déchaîné",4]]],["https://fr.wowhead.com/npc=174050",[[183681,"Machette tranche-toile",4],[183682,"Cordelière du serviteur",4],[183683,"Habits grouillants",4]]],["https://fr.wowhead.com/npc=174049",[[183625,"Collier reforgé de Taldaram",4],[183677,"Ceinture du buveur de sang",4],[183679,"Mules souples de Taldaram",4]]],["https://fr.wowhead.com/npc=174066",[[183643,"Déchirure de mortalité",4],[183644,"Protège-épaules de régurgitateur",4],[183645,"Cordelière du torturé",4]]],["https://fr.wowhead.com/npc=174065",[[183646,"Corselet de la vitalité siphonnée",4],[183647,"Trace de sang",4],[183648,"Gantelets broyeurs-de-veines",4]]],["https://fr.wowhead.com/npc=174064",[[183649,"Sac d’entrailles en vrac",4],[183650,"Minuscule abomination en bouteille",4],[183651,"Pansière des sutures septiques",4]]],["https://fr.wowhead.com/npc=174062",[[44151,"Rênes de proto-drake bleu",4],[183656,"Pourpoint de chevaucheur de drake",4],[183657,"Solerets en écailles de Skadi",4],[183670,"Ceinture de Skadi en saronite",4]]],["https://fr.wowhead.com/npc=174061",[[183658,"Fendeur de crânes monolithique d’Ingvar",4],[183659,"Bague d’Annhylde",4],[183668,"Ceinture à barbelures acérées en cuir",4]]],["https://fr.wowhead.com/npc=174048",[[183624,"Lame de Nadox dentelée",4],[183641,"Protège-épaules de rigidité corporelle",4],[183673,"Anneau-égide nérubien",4]]],["https://fr.wowhead.com/npc=174060",[[183661,"Gantelets de drakonnier",4],[183678,"Influenceur de Keleseth",4],[183680,"Cape sanguine royale",4]]],["https://fr.wowhead.com/npc=174059",[[183636,"Heaume du violent fracas",4],[183637,"Protège-épaules de la crapule mal famée",4],[183638,"Kriss fantasmagorique",4]]],["https://fr.wowhead.com/npc=174058",[[183634,"Sac en parfait état de Papa",4],[183635,"Gantelets de deuil",4],[183639,"Regard de confusion",4],[183675,"Mitaines de sueurs froides",4]]],["https://fr.wowhead.com/npc=174057",[[183632,"Protecteur des âmes volées",4],[183633,"Jambières à franges en cuir de wyrm",4],[183674,"Culotte en givre tissé",4]]],["https://fr.wowhead.com/npc=174056",[[183630,"Gourdin de deux tonnes de Gargivre",4],[183631,"Anneau de cornaline et de tendon",4],[183666,"Garde-jambes des grands fonds givrés",4]]],["https://fr.wowhead.com/npc=174055",[[183662,"Chemise grésillante lige-du-givre",4],[183663,"Coiffe aveugle d’Ulmaas",4],[183687,"Garde-épaules en sutures élimées",4]]],["https://fr.wowhead.com/npc=174063",[[183652,"Arc long résonnant de Zod",4],[183653,"Habit de Murmemort",4],[183655,"Manicles de gelée et de grésil",4]]],["https://fr.wowhead.com/npc=174067",[[183642,"Robe de souffle rauque",4],[183654,"Croquenots de guerre en os de dragon gravé",4],[183676,"Jonc de grêlon",4]]]]
 const bossIcon = document.getElementById('fav').href
 const bosses = [...document.getElementsByClassName('boss')]
@@ -317,4 +316,5 @@ loots.forEach(([url, items]) => {
 })
 
 </script>
+<script async src="https://wow.zamimg.com/widgets/power.js"></script>
 </html>
