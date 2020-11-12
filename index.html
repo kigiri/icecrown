@@ -390,7 +390,7 @@ const S = 1000
 const M = 60*1000
 const H = 60*M
 const now = Date.now()
-const start = Math.floor(now / (24*H)) * (24*H) - 1*H + 3*M + 30*S
+const start = Math.floor((now - 1*H) / (24*H)) * (24*H) + 3*M + 30*S
 for (const line of rawTimings.split('\n')) {
   if (/>(\d\d)h(\d\d)</.test(line)) {
     const [, h, m] = line.match(/>(\d\d)h(\d\d)</).map(Number)
@@ -401,6 +401,8 @@ for (const line of rawTimings.split('\n')) {
     boss || console.log({ name, line })
   }
 }
+
+console.log(timings)
 
 timings.sort((a, b) => b.time - a.time)
 const setTime = t => t && (t.boss.firstChild.textContent = relatime(t.time))
