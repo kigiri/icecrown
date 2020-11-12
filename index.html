@@ -230,7 +230,7 @@ const rawTimings = `
 
 		</tr>
 		<tr>
-			<td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Chevalier noir</i></td>
+			<td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Le Chevalier noir</i></td>
 		</tr>
 		<tr>
 			<td style="text-align : center;">01h20</td>
@@ -398,6 +398,7 @@ for (const line of rawTimings.split('\n')) {
   } else if (/i>([^<]+)</.test(line)) {
     const name = line.match(/i>([^<]+)</)[1].trim()
     boss = bosses.find(b => b.firstChild.nextSibling.textContent === name)
+    boss || console.log({ name, line })
   }
 }
 
