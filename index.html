@@ -50,7 +50,6 @@ body:after {
   font-size: 1.5vw;
   font-family: sans-serif;
   cursor: default;
-  user-select: none;
   flex-direction: column-reverse;
 }
 
@@ -88,8 +87,10 @@ body:after {
      0px 0px 10px #000;
 }
 
+.boss time { user-select: none }
+
 .boss time:before { content: ' ' }
-.boss:hover i, .boss:hover b { display: inherit }
+.boss:hover i, .boss:hover b { display: block }
 .boss b { display: none }
 .boss i {
   font-family: monospace;
@@ -101,6 +102,9 @@ body:after {
   padding: 5px;
   top: 5px;
   border-radius: 4px;
+  border-radius: 4px;
+  margin-bottom: 8px;
+  text-align: center;
 }
 
 @media (orientation: landscape) and (max-height: 66vw) {
@@ -270,7 +274,6 @@ for (const line of rawTimings.split('\n')) {
 timings.sort((a, b) => b.time - a.time)
 const setTime = t => t && (t.boss.lastChild.textContent = relatime(t.time))
 const update = () => {
-  console.log('update')
   const index = timings.findIndex(t => t.time < Date.now())
   const next = timings[index]
   const current = timings[index-1]
@@ -278,11 +281,6 @@ const update = () => {
   old && (old.boss.className = 'boss') // remove all classes
   setTime(current) && (current.boss.classList.add('current'))
   setTime(next) && (next.boss.classList.add('next'))
-
-  console.log({
-    current: setTime(current),
-    next: setTime(next),
-  })
 }
 
 setInterval(update, 1000)
