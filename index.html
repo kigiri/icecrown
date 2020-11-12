@@ -55,7 +55,6 @@ body:after {
 
 .current, .next { display: flex }
 .next { z-index: 10 }
-
 .boss:hover {
   z-index: 100;
   opacity: 1;
@@ -88,7 +87,6 @@ body:after {
 }
 
 .boss time { user-select: none }
-
 .boss time:before { content: ' ' }
 .boss:hover i, .boss:hover b { display: block }
 .boss b { display: none }
@@ -118,7 +116,7 @@ body:after {
   }
 
   #map {
-    width: 150vh;
+    width: 151.5151vh;
     height: 100vh;
   }
 }
@@ -241,7 +239,6 @@ const rawTimings = `
 <td style="text-align : center;">23h00</td>
 `
 
-
 const rtf = new Intl.RelativeTimeFormat('fr', {
   localeMatcher: "best fit",
   numeric: "always",
@@ -267,7 +264,6 @@ for (const line of rawTimings.split('\n')) {
   } else if (/i>([^<]+)</.test(line)) {
     const name = line.match(/i>([^<]+)</)[1].trim()
     boss = bosses.find(b => b.firstChild.textContent === name)
-    console.log({ name, boss })
   }
 }
 
@@ -275,10 +271,10 @@ timings.sort((a, b) => b.time - a.time)
 const setTime = t => t && (t.boss.lastChild.textContent = relatime(t.time))
 const update = () => {
   const index = timings.findIndex(t => t.time < Date.now())
-  const next = timings[index]
   const current = timings[index-1]
+  const next = timings[index]
   const old = timings[index+2]
-  old && (old.boss.className = 'boss') // remove all classes
+  timings.forEach(b => b.boss.className = 'boss')
   setTime(current) && (current.boss.classList.add('current'))
   setTime(next) && (next.boss.classList.add('next'))
 }
