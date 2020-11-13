@@ -41,15 +41,14 @@ body:after {
   z-index: -1;
 }
 
-a, .boss { font-family: sans-serif }
-
+label, a, .boss { font-family: sans-serif }
+label, .boss { font-size: 1.5vw }
 .boss {
   position: absolute;
   background-size: 1.5vw;
   background-repeat: no-repeat;
   display: none;
   padding-left: 1.5vw;
-  font-size: 1.5vw;
   cursor: default;
   flex-direction: column;
 }
@@ -78,7 +77,7 @@ a, .boss { font-family: sans-serif }
   background-repeat: no-repeat;
 }
 
-.boss a, .boss time {
+label, .boss a, .boss time {
   color: white;
   text-shadow:
    -1px -1px 0 #000,  
@@ -108,7 +107,7 @@ a, .boss { font-family: sans-serif }
 }
 
 @media (orientation: landscape) and (max-height: 66vw) {
-  .boss {
+  label, .boss {
     background-size: 2.25vh;
     padding-left: 2.25vh;
     font-size: 2.25vh;
@@ -137,6 +136,7 @@ a, .boss { font-family: sans-serif }
 </head>
 <body>
   <div id="map">
+    <label><input type="checkbox" name="all" id="show-all"> show all</label>
     <div class="boss" style="left:50.22%;top:88.00%"><time>0</time><a target="_blank" href="https://www.wowhead.com/npc=174054">Falric</a><i>50.22, 88.00</i></div>
     <div class="boss" style="left:79.86%;top:60.93%"><time>0</time><a target="_blank" href="https://www.wowhead.com/npc=174053">Prophète Tharon'ja</a><i>79.86, 60.93</i></div>
     <div class="boss" style="left:77.89%;top:65.92%"><time>0</time><a target="_blank" href="https://www.wowhead.com/npc=174052">Novos l'Invocateur</a><i>77.89, 65.92</i></div>
@@ -380,6 +380,14 @@ const rtf = new Intl.RelativeTimeFormat(navigator.language, {
 
 const relatime = time => {
   const diff = time - Date.now()
+  if (diff > H) {
+    const pre = diff > 0 ? 'in ' : ''
+    const post = diff < 0 ? ' ago' : ''
+    const d = Math.abs(diff)
+    const hours = Math.floor(d/H)
+    const minutes = Math.floor((d % H) / M)
+    return `${pre}${hours}h${String(minutes).padStart(2, '0')}${post}`
+  }
   return Math.abs(diff) < M
     ? rtf.format(Math.round(diff/1000), 'second')
     : rtf.format(Math.round(diff/M), 'minute')
@@ -391,39 +399,53 @@ const M = 60*1000
 const H = 60*M
 const now = Date.now()
 const start = Math.floor((now + 20*M) / (24*H)) * (24*H) - (1*H) - 17*M + 30*S
+const selection = (new URLSearchParams(location.search).get('boss') || '').split(',').filter(Boolean).map(Number)
 for (const line of rawTimings.split('\n')) {
   if (/>(\d\d)h(\d\d)</.test(line)) {
     const [, h, m] = line.match(/>(\d\d)h(\d\d)</).map(Number)
     const time = start + (h*60+m)*M
-    timings.push({ boss, time, text: relatime(time) })
+    boss && timings.push({ boss, time, text: relatime(time) })
   } else if (/i>([^<]+)</.test(line)) {
     const name = line.match(/i>([^<]+)</)[1].trim()
     boss = bosses.find(b => b.firstChild.nextSibling.textContent === name)
-    boss || console.log({ name, line })
-    boss && (boss.firstChild.nextSibling.href = boss.firstChild.nextSibling.href.replace('https://www', `https://${locale}`))
+    if (!boss) {
+      console.log({ name, line })
+      continue
+    }
+    const { href } = boss.firstChild.nextSibling
+    boss.firstChild.nextSibling.href = boss.firstChild.nextSibling.href.replace('https://www', `https://${locale}`)
+    if (!selection.length) continue
+    selection.includes(Number(href.split('=')[1])) || (boss = undefined)
   }
 }
 
 console.log(timings)
+const checkbox = document.getElementById('show-all')
 
 timings.sort((a, b) => b.time - a.time)
 const setTime = t => t && (t.boss.firstChild.textContent = relatime(t.time))
 const update = () => {
-  const index = timings.findIndex(t => t.time < Date.now())
-  const current = timings[index-1]
-  const next = timings[index]
-  const old = timings[index+2]
   timings.forEach(b => b.boss.className = 'boss')
-  setTime(current) && (current.boss.classList.add('current'))
-  setTime(next) && (next.boss.classList.add('next'))
+  if (checkbox.checked) {
+    timings
+      .filter(t => t.time > Date.now())
+      .forEach(b => setTime(b) && (b.boss.className = 'boss current'))
+  } else {
+    const index = timings.findIndex(t => t.time < Date.now())
+    const current = timings[index-1]
+    const next = timings[index]
+    const old = timings[index+2]
+    setTime(current) && (current.boss.classList.add('current'))
+    setTime(next) && (next.boss.classList.add('next'))
+  }
 }
 
 setInterval(update, 1000)
 update()
 
-// timings.map(t => console.log(relatime(t.time), now - t.time, t.boss.firstChild.textContent))
-
 loots.forEach(([url, items]) => {
+  const match = timings.find(t => t.boss.firstChild.nextSibling.href === url)
+  if (!match) return
   const lootsElement = document.createElement('div')
   for (const [id, name] of items) {
     const a = document.createElement('a')
@@ -433,10 +455,10 @@ loots.forEach(([url, items]) => {
   }
 
   lootsElement.className = 'loot'
-  timings
-    .find(t => t.boss.firstChild.nextSibling.href === url)
-    .boss.appendChild(lootsElement)
+  match.boss.appendChild(lootsElement)
 })
+
+checkbox.addEventListener('change', update)
 
 </script>
 <script async src="https://wow.zamimg.com/widgets/power.js"></script>
