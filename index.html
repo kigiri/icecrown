@@ -378,8 +378,13 @@ const rtf = new Intl.RelativeTimeFormat(navigator.language, {
   style: "long",
 })
 
+const S = 1000
+const M = 60*1000
+const H = 60*M
+const offset = new Date().getTimezoneOffset() * M
+const start = time => new Date().setHours(0,0,0,0) + offset + time
 const relatime = time => {
-  const diff = time - Date.now()
+  const diff = start(time) - Date.now()
   if (diff > H) {
     const pre = diff > 0 ? 'in ' : ''
     const post = diff < 0 ? ' ago' : ''
@@ -394,16 +399,12 @@ const relatime = time => {
 }
 
 const timings = []
-const S = 1000
-const M = 60*1000
-const H = 60*M
 const now = Date.now()
-const start = Math.floor((now + 20*M) / (24*H)) * (24*H) - (1*H) - 17*M + 30*S
 const selection = (new URLSearchParams(location.search).get('boss') || '').split(',').filter(Boolean).map(Number)
 for (const line of rawTimings.split('\n')) {
   if (/>(\d\d)h(\d\d)</.test(line)) {
     const [, h, m] = line.match(/>(\d\d)h(\d\d)</).map(Number)
-    const time = start + (h*60+m)*M
+    const time = (h*60+m)*M + 3*M + 30*S
     boss && timings.push({ boss, time, text: relatime(time) })
   } else if (/i>([^<]+)</.test(line)) {
     const name = line.match(/i>([^<]+)</)[1].trim()
@@ -428,10 +429,10 @@ const update = () => {
   timings.forEach(b => b.boss.className = 'boss')
   if (checkbox.checked) {
     timings
-      .filter(t => t.time > Date.now())
+      .filter(t => start(t.time) > Date.now())
       .forEach(b => setTime(b) && (b.boss.className = 'boss current'))
   } else {
-    const index = timings.findIndex(t => t.time < Date.now())
+    const index = timings.findIndex(t => start(t.time) < Date.now())
     const current = timings[index-1]
     const next = timings[index]
     const old = timings[index+2]
@@ -458,7 +459,9 @@ loots.forEach(([url, items]) => {
   match.boss.appendChild(lootsElement)
 })
 
-checkbox.addEventListener('change', update)
+selection.length
+  ? Object.assign(checkbox, { checked: true, disabled: true })
+  : checkbox.addEventListener('change', update)
 
 </script>
 <script async src="https://wow.zamimg.com/widgets/power.js"></script>
