@@ -78,6 +78,7 @@ label, .boss { font-size: 1.5vw }
   background-repeat: no-repeat;
 }
 
+label { user-select: none; cursor: default;  }
 label, .boss a, .boss time {
   color: white;
   text-shadow:
@@ -133,6 +134,19 @@ label, .boss a, .boss time {
   border-radius: 5px;
 }
 
+footer {  
+  position: absolute;
+  bottom: 0;
+  padding: 5px;
+  color: white;
+  right: 0;
+  font-family: monospace;
+}
+
+footer a {
+  font-family: monospace;
+  color: #90ebec;
+}
 </style>
 </head>
 <body>
@@ -161,6 +175,7 @@ label, .boss a, .boss time {
     <div class="boss" style="left:51.16%;top:74.48%"><time>0</time><a target="_blank" href="https://www.wowhead.com/npc=174063">Dame Murmemort</a><i>51.16, 74.48</i></div>
     <div class="boss" style="left:31.60%;top:70.50%"><time>0</time><a target="_blank" href="https://www.wowhead.com/npc=174067">Noth le Porte-peste</a><i>31.6, 70.5</i></div>
   </div>
+  <footer>this page is open source <a href="https://github.com/kigiri/icecrown">check it out</a></footer>
 </body>
 <script>
 const whTooltips = {colorLinks: true, iconizeLinks: true, renameLinks: true}
