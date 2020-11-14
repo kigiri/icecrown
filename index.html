@@ -187,7 +187,7 @@ const loots = [["https://www.wowhead.com/npc=174054",[[183664,"Bracer of Ground 
 const bossIcon = document.getElementById('fav').href
 const bosses = [...document.getElementsByClassName('boss')]
 bosses.forEach(b => b.style.backgroundImage = `url(${bossIcon})`)
-const selection = (new URLSearchParams(location.search).get('boss') || '').split(',').filter(Boolean).map(Number)
+const selection = (new URLSearchParams(location.search).get('boss') || '').split(',').filter(Boolean)
 
 const S = 1000
 const M = 60*S
@@ -214,7 +214,7 @@ const bossEntries = Object.entries({
   174053: "The Prophet Tharon'ja",
   174052: "Novos the Summoner",
   174048: "Elder Nado",
-}).reverse().filter(([id]) => !selection.length || selection.includes(Number(id)))
+}).reverse()
   .map(([id, name]) => {
     const boss = bosses.find(b => b.firstChild.nextSibling.href.endsWith(id))
     boss.firstChild.nextSibling.href = boss.firstChild.nextSibling.href.replace('https://www', `https://${locale}`)
@@ -229,6 +229,7 @@ const timings = Array(400)
     eu: initialTime + (i*20*M) - 80*M,
     us: initialTime + (i*20*M),
   }))
+  .filter(({ id }) => !selection.length || selection.includes(id))
 
 const updateTimeZone = () => {
   const key = localStorage.zone === 'EU' ? 'eu' : 'us'
