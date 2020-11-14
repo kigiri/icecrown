@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -154,6 +153,8 @@ footer a {
     <label><input type="checkbox" id="sound"> sound</label>
     <label><input type="checkbox" id="notify"> notify</label>
     <label><input type="checkbox" id="show-all"> show all</label>
+    <label><input type="radio" name="zone" id="us" checked>US</label>
+    <label><input type="radio" name="zone" id="eu">EU</label>
     <div class="boss" style="left:50.22%;top:88.00%"><time>0</time><a target="_blank" href="https://www.wowhead.com/npc=174054">Falric</a><i>50.22, 88.00</i></div>
     <div class="boss" style="left:79.86%;top:60.93%"><time>0</time><a target="_blank" href="https://www.wowhead.com/npc=174053">Prophète Tharon'ja</a><i>79.86, 60.93</i></div>
     <div class="boss" style="left:77.89%;top:65.92%"><time>0</time><a target="_blank" href="https://www.wowhead.com/npc=174052">Novos l'Invocateur</a><i>77.89, 65.92</i></div>
@@ -186,209 +187,57 @@ const loots = [["https://www.wowhead.com/npc=174054",[[183664,"Bracer of Ground 
 const bossIcon = document.getElementById('fav').href
 const bosses = [...document.getElementsByClassName('boss')]
 bosses.forEach(b => b.style.backgroundImage = `url(${bossIcon})`)
+const selection = (new URLSearchParams(location.search).get('boss') || '').split(',').filter(Boolean).map(Number)
 
-const rawTimings = `
-  <tr>
-      <td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Reine de sang Lana'thel</i></td>
-    </tr>
-    <tr>
-      <td style="text-align : center;">06h00</td>
-      <td style="text-align : center;">12h40</td>
-      <td style="text-align : center;">19h20</td>
-      <td style="text-align : center;">-</td>
+const S = 1000
+const M = 60*S
+const H = 60*M
+const initialTime = 1605342000000
+const bossEntries = Object.entries({
+  174067: "Noth the Plaguebringer",
+  174066: "Patchwerk",
+  174065: "Blood Queen Lana'thel",
+  174064: "Professor Putricide",
+  174063: "Lady Deathwhisper",
+  174062: "Skadi the Ruthless",
+  174061: "Ingvar the Plunderer",
+  174051: "Trollgore",
+  174050: "Krik'thir the Gatewatcher",
+  174049: "Prince Taldaram",
+  174060: "Prince Keleseth",
+  174059: "The Black Knight",
+  174058: "Bronjahm",
+  174057: "Scourgelord Tyrannus",
+  174056: "Forgemaster Garfrost",
+  174055: "Marwyn",
+  174054: "Falric",
+  174053: "The Prophet Tharon'ja",
+  174052: "Novos the Summoner",
+  174048: "Elder Nado",
+}).reverse().filter(([id]) => !selection.length || selection.includes(Number(id)))
+  .map(([id, name]) => {
+    const boss = bosses.find(b => b.firstChild.nextSibling.href.endsWith(id))
+    boss.firstChild.nextSibling.href = boss.firstChild.nextSibling.href.replace('https://www', `https://${locale}`)
+    return { id, boss, name }
+  })
 
-    </tr>
-    <tr>
-      <td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Professeur Putricide</i></td>
-    </tr>
-    <tr>
-      <td style="text-align : center;">06h20</td>
-      <td style="text-align : center;">13h00</td>
-      <td style="text-align : center;">19h40</td>
-      <td style="text-align : center;">-</td>
-    </tr>
-    <tr>
-      <td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Dame Murmemort</i></td>
-    </tr>
-    <tr>
-      <td style="text-align : center;">00h00</td>
-      <td style="text-align : center;">06h40</td>
-      <td style="text-align : center;">13h20</td>
-      <td style="text-align : center;">20h00</td>
+const timings = Array(400)
+  .fill(bossEntries)
+  .flat()
+  .map((props, i) => ({
+    ...props,
+    eu: initialTime + (i*20*M) - 80*M,
+    us: initialTime + (i*20*M),
+  }))
 
-    </tr>
-    <tr>
-      <td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Skadi le Brutal</i> <a class="tooltip_inline monture_lien violet"href="https://www.mamytwink.com/montures/renes-de-proto-drake-bleu" data-type="monture" data-couleur="violet" data-type-monture="Volante" data-source-monture="Butin" data-difficulte-monture="Difficile"><img src="https://www.mamytwink.com/articles/montures/proto-bleu-icone.jpg" alt="Icone monture Rênes de proto-drake bleu"/><span class="nom">Rênes de proto-drake bleu</span></a> </td>
-    </tr>
-    <tr>
-      <td style="text-align : center;">00h20</td>
-      <td style="text-align : center;">07h00</td>
-      <td style="text-align : center;">13h40</td>
-      <td style="text-align : center;">20h20</td>
+const updateTimeZone = () => {
+  const key = localStorage.zone === 'EU' ? 'eu' : 'us'
+  for (const t of timings) {
+    t.time = t[key]
+  }
+}
 
-    </tr>
-    <tr>
-      <td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Ingvar le Pilleur</i></td>
-    </tr>
-    <tr>
-      <td style="text-align : center;">00h40</td>
-      <td style="text-align : center;">07h20</td>
-      <td style="text-align : center;">14h00</td>
-      <td style="text-align : center;">20h40</td>
-
-    </tr>
-    <tr>
-      <td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Prince Keleseth</i></td>
-    </tr>
-    <tr>
-      <td style="text-align : center;">01h00</td>
-      <td style="text-align : center;">07h40</td>
-      <td style="text-align : center;">14h20</td>
-      <td style="text-align : center;">21h00</td>
-
-    </tr>
-    <tr>
-      <td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Le Chevalier noir</i></td>
-    </tr>
-    <tr>
-      <td style="text-align : center;">01h20</td>
-      <td style="text-align : center;">08h00</td>
-      <td style="text-align : center;">14h40</td>
-      <td style="text-align : center;">21h20</td>
-
-    </tr>
-    <tr>
-      <td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Bronjahm </i>(sac 34 emplacements)</td>
-    </tr>
-    <tr>
-      <td style="text-align : center;">01h40</td>
-      <td style="text-align : center;">08h20</td>
-      <td style="text-align : center;">15h00</td>
-      <td style="text-align : center;">21h40</td>
-
-    </tr>
-    <tr>
-      <td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Seigneur du Fléau Tyrannus</i></td>
-    </tr>
-    <tr>
-      <td style="text-align : center;">02h00</td>
-      <td style="text-align : center;">08h40</td>
-      <td style="text-align : center;">15h20</td>
-      <td style="text-align : center;">22h00</td>
-
-    </tr>
-    <tr>
-      <td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Maître-forge Gargivre</i></td>
-    </tr>
-    <tr>
-      <td style="text-align : center;">02h20</td>
-      <td style="text-align : center;">09h00</td>
-      <td style="text-align : center;">15h40</td>
-      <td style="text-align : center;">22h20</td>
-
-    </tr>
-    <tr>
-      <td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Marwyn</i></td>
-    </tr>
-    <tr>
-      <td style="text-align : center;">02h40</td>
-      <td style="text-align : center;">09h20</td>
-      <td style="text-align : center;">16h00</td>
-      <td style="text-align : center;">22h40</td>
-
-    </tr>
-    <tr>
-      <td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Falric</i></td>
-    </tr>
-    <tr>
-      <td style="text-align : center;">03h00</td>
-      <td style="text-align : center;">09h40</td>
-      <td style="text-align : center;">16h20</td>
-      <td style="text-align : center;">23h00</td>
-
-    </tr>
-    <tr>
-      <td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Prophète Tharon'ja</i></td>
-    </tr>
-    <tr>
-      <td style="text-align : center;">03h20</td>
-      <td style="text-align : center;">10h00</td>
-      <td style="text-align : center;">16h40</td>
-      <td style="text-align : center;">23h20</td>
-
-    </tr>
-    <tr>
-      <td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Novos l'Invocateur</i></td>
-    </tr>
-    <tr>
-      <td style="text-align : center;">03h40</td>
-      <td style="text-align : center;">10h20</td>
-      <td style="text-align : center;">17h00</td>
-      <td style="text-align : center;">23h40</td>
-
-    </tr>
-    <tr>
-      <td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Trollétripe</i></td>
-    </tr>
-    <tr>
-      <td style="text-align : center;">04h00</td>
-      <td style="text-align : center;">10h40</td>
-      <td style="text-align : center;">17h20</td>
-      <td style="text-align : center;">00h00*</td>
-
-    </tr>
-    <tr>
-      <td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Krik'thir le Gardien de la porte</i></td>
-    </tr>
-    <tr>
-      <td style="text-align : center;">04h20</td>
-      <td style="text-align : center;">11h00</td>
-      <td style="text-align : center;">17h40</td>
-      <td style="text-align : center;">00h20*</td>
-
-    </tr>
-    <tr>
-      <td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Prince Taldaram</i></td>
-    </tr>
-    <tr>
-      <td style="text-align : center;">04h40</td>
-      <td style="text-align : center;">11h20</td>
-      <td style="text-align : center;">18h00</td>
-      <td style="text-align : center;">00h40*</td>
-
-    </tr>
-    <tr>
-      <td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Ancien Nadox</i></td>
-    </tr>
-    <tr>
-      <td style="text-align : center;">05h00</td>
-      <td style="text-align : center;">11h40</td>
-      <td style="text-align : center;">18h20</td>
-      <td style="text-align : center;">01h00*</td>
-
-    </tr>
-    <tr>
-      <td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Noth le Porte-peste</i></td>
-    </tr>
-    <tr>
-      <td style="text-align : center;">05h20</td>
-      <td style="text-align : center;">12h00</td>
-      <td style="text-align : center;">18h40</td>
-      <td style="text-align : center;">01h20*</td>
-
-    </tr>
-    <tr>
-      <td style="text-align : center; color : rgb(204, 188, 70);" colspan="4" style="text-align : center;"><i>Le Recousu</i></td>
-    </tr>
-    <tr>
-      <td style="text-align : center;">05h40</td>
-      <td style="text-align : center;">12h20</td>
-      <td style="text-align : center;">19h00</td>
-      <td style="text-align : center;">01h40*</td>
-
-    </tr>
-
-`
+updateTimeZone()
 
 const rtf = new Intl.RelativeTimeFormat(navigator.language, {
   localeMatcher: "best fit",
@@ -396,19 +245,14 @@ const rtf = new Intl.RelativeTimeFormat(navigator.language, {
   style: "long",
 })
 
-const S = 1000
-const M = 60*1000
-const H = 60*M
-const offset = new Date().getTimezoneOffset() * M
-const start = time => new Date().setHours(0,0,0,0) + offset + time
 const relatime = time => {
-  const diff = start(time) - Date.now()
+  const diff = time - Date.now()
   if (diff > H) {
     const pre = diff > 0 ? 'in ' : ''
     const post = diff < 0 ? ' ago' : ''
     const d = Math.abs(diff)
     const hours = Math.floor(d/H)
-    const minutes = Math.floor((d % H) / M)
+    const minutes = Math.round((d % H) / M)
     return `${pre}${hours}h${String(minutes).padStart(2, '0')}${post}`
   }
   return Math.abs(diff) < M
@@ -416,29 +260,7 @@ const relatime = time => {
     : rtf.format(Math.round(diff/M), 'minute')
 }
 
-const timings = []
-const now = Date.now()
-const selection = (new URLSearchParams(location.search).get('boss') || '').split(',').filter(Boolean).map(Number)
-for (const line of rawTimings.split('\n')) {
-  if (/>(\d\d)h(\d\d)</.test(line)) {
-    const [, h, m] = line.match(/>(\d\d)h(\d\d)</).map(Number)
-    const time = (h*60+m)*M + 3*M + 25*S
-    boss && timings.push({ boss, time, text: relatime(time) })
-  } else if (/i>([^<]+)</.test(line)) {
-    const name = line.match(/i>([^<]+)</)[1].trim()
-    boss = bosses.find(b => b.firstChild.nextSibling.textContent === name)
-    if (!boss) {
-      console.log({ name, line })
-      continue
-    }
-    const { href } = boss.firstChild.nextSibling
-    boss.firstChild.nextSibling.href = boss.firstChild.nextSibling.href.replace('https://www', `https://${locale}`)
-    if (!selection.length) continue
-    selection.includes(Number(href.split('=')[1])) || (boss = undefined)
-  }
-}
-
-console.log(timings)
+console.log(timings.map(t => `${t.name} - ${relatime(t.time)}`).join('\n'))
 const checkbox = document.getElementById('show-all')
 
 timings.sort((a, b) => b.time - a.time)
@@ -447,10 +269,10 @@ const update = () => {
   timings.forEach(b => b.boss.className = 'boss')
   if (checkbox.checked) {
     timings
-      .filter(t => start(t.time) > Date.now())
+      .filter(t => t.time > Date.now())
       .forEach(b => setTime(b) && (b.boss.className = 'boss current'))
   } else {
-    const index = timings.findIndex(t => start(t.time) < Date.now())
+    const index = timings.findIndex(t => t.time < Date.now())
     const current = timings[index-1]
     const next = timings[index]
     const old = timings[index+2]
@@ -537,7 +359,6 @@ const play = (() => {
 
 sound.checked = !play.isMuted()
 sound.addEventListener('change', () => {
-  console.log(play.isMuted())
   if (play.isMuted()) {
     play.muted(false)
     play('CS6.ED+A7.BD')
@@ -548,17 +369,30 @@ sound.addEventListener('change', () => {
 })
 
 const notifyEngine = () => {
-  const { boss, time } = [...timings].reverse().find(t => start(t.time) > Date.now())
+  const { boss, time } = [...timings].reverse().find(t => t.time > Date.now())
   setTimeout(() => {
     play('CS6.ED+A7.BD')
     if (!notify.checked) return
-    const notification = new Notification(`${boss.firstChild.nextSibling.textContent} just spawned`)
-    console.log(notification)
+    new Notification(`${boss.firstChild.nextSibling.textContent} just spawned`)
     notifyEngine()
-  }, start(time) - Date.now())
-  console.log('next boss', boss.firstChild.nextSibling.textContent, 'in', start(time) - Date.now(), 'ms')
+  }, time - Date.now())
+  console.log('next boss', boss.firstChild.nextSibling.textContent, relatime(time))
 }
 notifyEngine()
+
+const zone = document.getElementById('eu')
+zone.checked = localStorage.zone === 'EU'
+zone.addEventListener('change', () => {
+  localStorage.zone = 'EU'
+  updateTimeZone()
+  update()
+})
+
+document.getElementById('us').addEventListener('change', () => {
+  localStorage.zone = ''
+  updateTimeZone()
+  update()
+})
 
 </script>
 <script async src="https://wow.zamimg.com/widgets/power.js"></script>
