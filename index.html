@@ -226,8 +226,8 @@ const timings = Array(400)
   .flat()
   .map((props, i) => ({
     ...props,
-    eu: initialTime + (i*20*M) - 80*M,
-    us: initialTime + (i*20*M),
+    eu: initialTime + (i*10*M) - 80*M,
+    us: initialTime + (i*10*M),
   }))
   .filter(({ id }) => !selection.length || selection.includes(id))
 
